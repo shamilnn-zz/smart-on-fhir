@@ -67,9 +67,9 @@
         });
         
         // Do complex search, MedicationStatement shall be in the context when registered the app
-        smart.patient.api.fetchAll({type: 'MedicationStatement'}).then(function(){
+        smart.patient.api.fetchAll({type: 'Observation'}).then(function(){
           document.getElementById('lname').innerHTML = JSON.stringify(smart);
-          console.log('SMART(MedicationStatement): ' + JSON.stringify(smart));
+          console.log('SMART(Observation): ' + JSON.stringify(smart));
         });
         
       });
