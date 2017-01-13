@@ -4,7 +4,6 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
     <title>15:15 TEST SMART APP</title>
-
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
   </head>
   <body>
@@ -20,58 +19,28 @@
 
       <h2>Patient Resource</h2>
       <table>
-        <tr>
-          <th>First Name:</th>
-          <td id='fname'></td>
-        </tr>
-        <tr>
-          <th>Last Name:</th>
-          <td id='lname'></td>
-        </tr>
-        <tr>
-          <th>Gender:</th>
-          <td id='gender'></td>
-        </tr>
-        <tr>
-          <th>Date of Birth:</th>
-          <td id='birthdate'></td>
-        </tr>
-        <tr>
-          <th>Age:</th>
-          <td id='age'></td>
-        </tr>
+        <tr><th>First Name:</th><td id='fname'></td></tr>
+        <tr><th>Last Name:</th><td id='lname'></td></tr>
+        <tr><th>Gender:</th><td id='gender'></td></tr>
+        <tr><th>Date of Birth:</th><td id='birthdate'></td></tr>
+        <tr><th>Age:</th><td id='age'></td></tr>
       </table>
       <h2>Observation Resource</h2>
       <table>
-        <tr>
-          <th>Height:</th>
-          <td id='height'></td>
-        </tr>
-        <tr>
-          <th>Systolic Blood Pressure:</th>
-          <td id='systolicbp'></td>
-
-        </tr>
-        <tr>
-          <th>Diastolic Blood Pressure:</th>
-          <td id='diastolicbp'></td>
-        </tr>
-        <tr>
-          <th>LDL:</th>
-          <td id='ldl'></td>
-        </tr>
-        <tr>
-          <th>HDL:</th>
-          <td id='hdl'></td>
-        </tr>
+        <tr><th>Height:</th><td id='height'></td></tr>
+        <tr><th>Systolic Blood Pressure:</th><td id='systolicbp'></td></tr>
+        <tr><th>Diastolic Blood Pressure:</th><td id='diastolicbp'></td></tr>
+        <tr><th>LDL:</th><td id='ldl'></td></tr>
+        <tr><th>HDL:</th><td id='hdl'></td></tr>
       </table>
     </div>
+    
     <script src='./lib/es6-shim-0.35.1.min.js'></script>
     <script src='./src/js/example-smart-app.js'></script>
     <script src='./lib/fhir-client.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>
-      
+    
+    <script>      
       /*
       extractData().then(
         //Display Patient Demographics and Observations if extractData was success
@@ -87,21 +56,18 @@
         }
       );
       */
-      
-      
+            
       alert('Entering FHIR.oauth2.ready()');
       window.FHIR.oauth2.ready(function(smart){
-        smart.patient.read();
-        
+     
         // Log the SMART object after obtaining the context
-        smart.patient.read().then(function(pt) {
+        smart.patient.read().then(function() {
           document.getElementById('fname').innerHTML = JSON.stringify(smart);
+          console.log('SMART: ' + JSON.stringify(smart));
         });
-        console.log('SMART: ' + JSON.stringify(smart));
-        
         
         // Do complex search, MedicationStatement shall be in the context when registered the app
-        smart.patient.api.fetchAll({type: 'MedicationStatement'}).then(function(){
+        smart.patient.api.fetchAll({type: 'MedicationStatement', query: ''}).then(function(){
           document.getElementById('lname').innerHTML = JSON.stringify(smart);
         });
         console.log('SMART(MedicationStatement): ' + JSON.stringify(smart));
