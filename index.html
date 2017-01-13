@@ -90,9 +90,9 @@
       
       
       alert('Entering FHIR.oauth2.ready()');
-      FHIR.oauth2.ready(function(smart){
+      window.FHIR.oauth2.ready(function(smart){
         smart.patient.read();
-        console.log(JSON.stringify(smart,null,2));
+        console.log('SMART: ' + JSON.stringify(smart));
         alert('SMART: ' + JSON.stringify(smart) + \n\n\n);                
       });
       
