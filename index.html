@@ -90,7 +90,8 @@
       */
       FHIR.oauth2.ready(function(smart){
         smart.patient.read();
-        alert(JSON.stringify(smart));
+        alert('SMART: ' + JSON.stringify(smart) + \n\n\n);
+        $('#fname').html('SMART: ' + JSON.stringify(smart));        
       });
     </script>
   </body>
