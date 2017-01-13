@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>15:51 TEST SMART APP</title>
+    <title>15:58 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
   </head>
   <body>
@@ -61,11 +61,13 @@
       window.FHIR.oauth2.ready(function(smart){
      
         // Log the SMART object after obtaining the context
-        smart.patient.read().then(function() {
-          document.getElementById('fname').innerHTML = 'Why this does not show anything?';
+        smart.patient.read().then(function(pt) {
+          document.getElementById('fname').innerHTML = pt.name.family;
+          document.getElementById('lname').innerHTML = 'Last name is not retrieved';
           console.log('SMART: ' + JSON.stringify(smart));
         });
         
+       
         // Do complex search, MedicationStatement shall be in the context when registered the app
         /*
         smart.patient.api.fetchAll({type: 'Observation'}).then(function(){
