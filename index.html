@@ -73,6 +73,7 @@
     <script>
       alert('Entering debugger...');
       debugger;
+      /*
       extractData().then(
         //Display Patient Demographics and Observations if extractData was success
         function(p) {
@@ -86,6 +87,11 @@
           $('#errors').html('<p> Failed to call FHIR Service </p>');
         }
       );
+      */
+      FHIR.oauth2.ready(function(smart){
+        smart.patient.read();
+        alert(JSON.stringify(smart));
+      });
     </script>
   </body>
 </html>
