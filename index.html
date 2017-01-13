@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>15:15 TEST SMART APP</title>
+    <title>15:34 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
   </head>
   <body>
@@ -67,11 +67,11 @@
         });
         
         // Do complex search, MedicationStatement shall be in the context when registered the app
-        smart.patient.api.fetchAll({type: 'MedicationStatement', query: ''}).then(function(){
+        smart.patient.api.fetchAll({type: 'MedicationStatement'}).then(function(){
           document.getElementById('lname').innerHTML = JSON.stringify(smart);
+          console.log('SMART(MedicationStatement): ' + JSON.stringify(smart));
         });
-        console.log('SMART(MedicationStatement): ' + JSON.stringify(smart));
-
+        
       });
       
     </script>
