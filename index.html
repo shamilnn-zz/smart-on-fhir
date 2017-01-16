@@ -12,6 +12,10 @@
     <script src='./lib/fhir-client.js'></script>
     
     <script type="text/javascript">
+      $( document ).ready(function(){
+        console.log("URL: " + window.location.href);
+      });
+      
       $( window ).load(function() {
         
         $('.spinner').append("<p> Started </p>");
