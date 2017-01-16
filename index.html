@@ -40,7 +40,6 @@
           // Once the client is initialized, you can obtain the context in which it was launched (the user who authorized the client and, if applicable, the patient that has been selected).
           // This returns a jQuery Deferred object which you can register a success callback to process the returned FHIR resource.
           smart.patient.read();
-          console.log( "Patient.read(): " + JSON.stringify(pt) );
         
           // 3. Fetch a resource
           // These functions return $.Deferred object, which you can work with simply by calling their done method.
