@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>13:45 TEST SMART APP</title>
+    <title>14:03 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -27,11 +27,12 @@
         // 1. Initializing the client
         // Before you are able to run any operations against the FHIR API using the JS client, you will need to initialize it first.
         FHIR.oauth2.ready(onReady, onError);
-        $('.spinner').append("<p>" + "window.FHIR: " + JSON.stringify(window.FHIR,null,2) + "</p>");
+        $('.spinner').append("<p>" + "window.FHIR: " + JSON.stringify(window.FHIR) + "</p>");
         console.log( "window.FHIR: " + JSON.stringify(window.FHIR,null,2) );
         
         // The deferred.promise() method allows an asynchronous function to prevent other code from interfering with the 
         // progress or status of its internal request.
+        $('.spinner').append("<p> Completed </p>");
         console.log( "Completed" );
         return def.promise();
         
@@ -41,12 +42,14 @@
           // 1. Retrieve patient in scope
           // This will return a patient object like this: {"id":"4342009","api":{}}
           var patient = smart.patient;
+          $('.spinner').append("<p>" + "Patient from scope: " + JSON.stringify(patient) + "</p>");
           console.log( "Patient from scope: " + JSON.stringify(patient,null,2) );
           
           // 2. Obtaining the context
           // Once the client is initialized, you can obtain the context in which it was launched (the user who authorized the client and, if applicable, the patient that has been selected).
           // This returns a jQuery Deferred object which you can register a success callback to process the returned FHIR resource.
           smart.patient.read().then(function(pt) {
+            $('.spinner').append("<p>" + "Patient from context: " + JSON.stringify(pt) + "</p>");
             console.log( "Patient from context: " + JSON.stringify(pt,null,2) );            
           });
           
@@ -54,7 +57,8 @@
           // 4. Processing search results
           // This function return $.Deferred object, which you can work with simply by calling their done() method.
           // In the $.Deferred object's done() callback, you'll get a data structure containing search results.
-          smart.patient.api.search({type: 'Observation'}).done(function(obs){        
+          smart.patient.api.search({type: 'Observation'}).done(function(obs){
+            $('.spinner').append("<p>" + "Observation: " + JSON.stringify(obs) + "</p>");
              console.log( "Observation: " + JSON.stringify(obs,null,2) );
             
              // Resolve a Deferred object and call any doneCallbacks with the given args.
@@ -65,6 +69,7 @@
         } // End onRead()
         
         function onError(smart) {
+          $('.spinner').append("<p>" + "Error: " + JSON.stringify(smart) + "</p>");
           console.log( "Error: " + JSON.stringify(smart,null,2) );
           console.log('FHIR.oauth2.ready(OnError)', arguments);
           
@@ -79,50 +84,6 @@
     </script>
   </head>
   <body>
-    <div id='errors'>
-    </div>
-    <div id="loading" class="spinner">
-    </div>
-    <div id='holder' >
-      <h2>Example-SMART-App</h2>
-<!--
-      <h2>Patient Resource</h2>
-      <table>
-        <tr><th>First Name:</th><td id='fname'></td></tr>
-        <tr><th>Last Name:</th><td id='lname'></td></tr>
-        <tr><th>Gender:</th><td id='gender'></td></tr>
-        <tr><th>Date of Birth:</th><td id='birthdate'></td></tr>
-        <tr><th>Age:</th><td id='age'></td></tr>
-      </table>
-      <h2>Observation Resource</h2>
-      <table>
-        <tr><th>Height:</th><td id='height'></td></tr>
-        <tr><th>Systolic Blood Pressure:</th><td id='systolicbp'></td></tr>
-        <tr><th>Diastolic Blood Pressure:</th><td id='diastolicbp'></td></tr>
-        <tr><th>LDL:</th><td id='ldl'></td></tr>
-        <tr><th>HDL:</th><td id='hdl'></td></tr>
-      </table>
--->      
-    </div>
-    
-
-    
-    <script>      
-      /*
-      extractData().then(
-        //Display Patient Demographics and Observations if extractData was success
-        function(p) {
-          drawVisualization(p);
-          console.log(JSON.stringify(window.FHIR,null,2));
-        },
-
-        //Display 'Failed to call FHIR Service' if extractData failed
-        function() {
-          $('#loading').hide();
-          $('#errors').html('<p> Failed to call FHIR Service </p>');
-        }
-      );
-      */
-    </script>
+    <div id="loading" class="spinner"></div>
   </body>
 </html>
