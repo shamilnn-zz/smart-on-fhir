@@ -9,7 +9,6 @@
   <body>
     <script src='./lib/fhir-client.js'></script>
     <script>
-      alert("URL: " + window.location.href);
       FHIR.oauth2.authorize({
         'client_id': '8b689780-8548-43e4-b65f-751f8973ef22',
         'scope':  'patient/Patient.read patient/Observation.read patient/MedicationStatement.read patient/MedicationStatement.write launch online_access openid profile'
@@ -17,9 +16,6 @@
       console.log("FHIR launch: " + JSON.stringify(FHIR));
     </script>
     <div class="spinner">
-      <div class="bounce1"></div>
-      <div class="bounce2"></div>
-      <div class="bounce3"></div>
     </div>
   </body>
 </html>
