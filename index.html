@@ -3,8 +3,61 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>15:58 TEST SMART APP</title>
+    <title>9:20 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
+    
+    <script src='./lib/es6-shim-0.35.1.min.js'></script>
+    <!-- <script src='./src/js/example-smart-app.js'></script> -->
+    <script src='./lib/fhir-client.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+    <script>
+      $( document ).ready(function() {
+        console.log( "Loading page" );
+        // Creating a deferred object for a set of enhancements to the way to use callbacks.
+        var ret = $.Deferred();
+        
+        // 1. Initializing the client
+        // Before you are able to run any operations against the FHIR API using the JS client, you will need to initialize it first.
+        FHIR.oauth2.ready(onReady, onError);
+        
+        // 2. Obtaining the context
+        // Once the client is initialized, you can obtain the context in which it was launched (the user who authorized the client and, if applicable, the patient that has been selected).
+        // This returns a jQuery Deferred object which you can register a success callback to process the returned FHIR resource.
+        smart.patient.read();
+        console.log( "Context: " + JSON.stringify(smart) );
+        
+        // 3. Fetch a resource
+        // These functions return $.Deferred object, which you can work with simply by calling their done method.        
+        var observation = smart.patient.api.fetchAll({
+                    type: 'Observation',
+                    query: {
+                      code: {
+                        $or: ['http://loinc.org|8302-2', 'http://loinc.org|8462-4',
+                              'http://loinc.org|8480-6', 'http://loinc.org|2085-9',
+                              'http://loinc.org|2089-1', 'http://loinc.org|55284-4']
+                      }
+                    }
+                  });
+        
+        // In the $.Deferred object's done() callback, you'll get a data structure containing search results.
+        observation.done(function(obs){
+          console.log( obs );
+        });
+        
+        // The deferred.promise() method allows an asynchronous function to prevent other code from interfering with the progress
+        // or status of its internal request.
+        return ret.promise();
+        console.log( "Completed" );
+        
+        
+        function onError() {
+          console.log('FHIR.oauth2.ready(OnError)', arguments);
+          ret.reject();
+        }
+
+      });
+    </script>
   </head>
   <body>
     <div id='errors'>
@@ -16,7 +69,7 @@
     </div>
     <div id='holder' >
       <h2>Example-SMART-App</h2>
-
+<!--
       <h2>Patient Resource</h2>
       <table>
         <tr><th>First Name:</th><td id='fname'></td></tr>
@@ -33,12 +86,10 @@
         <tr><th>LDL:</th><td id='ldl'></td></tr>
         <tr><th>HDL:</th><td id='hdl'></td></tr>
       </table>
+-->      
     </div>
     
-    <script src='./lib/es6-shim-0.35.1.min.js'></script>
-    <script src='./src/js/example-smart-app.js'></script>
-    <script src='./lib/fhir-client.js'></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
     
     <script>      
       /*
@@ -56,27 +107,6 @@
         }
       );
       */
-            
-      alert('Entering FHIR.oauth2.ready()');
-      window.FHIR.oauth2.ready(function(smart){
-     
-        // Log the SMART object after obtaining the context
-        smart.patient.read().then(function(pt) {
-          document.getElementById('fname').innerHTML = pt.name.family;
-          document.getElementById('lname').innerHTML = 'Last name is not retrieved';
-          console.log('SMART: ' + JSON.stringify(smart));
-        });
-        
-       
-        // Do complex search, MedicationStatement shall be in the context when registered the app
-        /*
-        smart.patient.api.fetchAll({type: 'Observation'}).then(function(){
-          document.getElementById('lname').innerHTML = JSON.stringify(smart);
-          console.log('SMART(Observation): ' + JSON.stringify(smart));
-        });
-        */
-      });
-      
     </script>
   </body>
 </html>
