@@ -14,18 +14,20 @@
     <script type="text/javascript">
       $( window ).load(function() {
         
+        $('.spinner').append("<p> Started </p>");
         console.log( "Loading page..." );
         
         // Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
         var def = $.Deferred();
         def.done(function(){
-          $('#holder').append("<p> All done </p>");
+          $('.spinner').append("<p> All done </p>");
           console.log( "All done" );
         });
         
         // 1. Initializing the client
         // Before you are able to run any operations against the FHIR API using the JS client, you will need to initialize it first.
         FHIR.oauth2.ready(onReady, onError);
+        $('.spinner').append("<p>" + "window.FHIR: " + JSON.stringify(window.FHIR,null,2) + "</p>");
         console.log( "window.FHIR: " + JSON.stringify(window.FHIR,null,2) );
         
         // The deferred.promise() method allows an asynchronous function to prevent other code from interfering with the 
@@ -73,13 +75,7 @@
           return def.reject();
         } // End onError()
 
-      })
-      .then(onShow);
-      
-      function onShow(obs) {
-        $(".spinner").append("<p>" + JSON.stringify(obs) + "</p>");
-      }
-
+      });
     </script>
   </head>
   <body>
