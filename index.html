@@ -12,14 +12,14 @@
     <script src='./lib/fhir-client.js'></script>
     
     <script type="text/javascript">
-      $( document ).ready(function() {
+      $( window ).load(function() {
         
         console.log( "Loading page..." );
         
         // Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
         var def = $.Deferred();
         def.done(function(){
-          $("#holder").append("<p> All done </p>");
+          $('#holder').append("<p> All done </p>");
           console.log( "All done" );
         });
         
