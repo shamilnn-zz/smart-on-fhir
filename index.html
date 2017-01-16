@@ -14,9 +14,14 @@
     <script type="text/javascript">
       $( document ).ready(function() {
         
-        console.log( "Loading page" );
+        console.log( "Loading page..." );
+        
         // Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
         var def = $.Deferred();
+        def.done(function(){
+          $("#holder").append("<p> All done </p>");
+          console.log( "All done" );
+        });
         
         // 1. Initializing the client
         // Before you are able to run any operations against the FHIR API using the JS client, you will need to initialize it first.
@@ -30,32 +35,31 @@
         
         
         function onReady(smart) {
-          $("#holder").append("<p> SMART: " + JSON.stringify(smart) + "</p>");
-          
+         
           // 1. Retrieve patient in scope
           // This will return a patient object like this: {"id":"4342009","api":{}}
           var patient = smart.patient;
-          $("#holder").append("<p> Patient: " + JSON.stringify(patient) + "</p>");
-          console.log( "Patient: " + JSON.stringify(patient) );
+          console.log( "Patient from scope: " + JSON.stringify(patient) );
           
           // 2. Obtaining the context
           // Once the client is initialized, you can obtain the context in which it was launched (the user who authorized the client and, if applicable, the patient that has been selected).
           // This returns a jQuery Deferred object which you can register a success callback to process the returned FHIR resource.
-          smart.patient.read();
-        
+          smart.patient.read().then(function(pt) {
+            console.log( "Patient from context: " + JSON.stringify(pt) );            
+          });
+          
           // 3. Fetch a resource
           // 4. Processing search results
           // This function return $.Deferred object, which you can work with simply by calling their done() method.
           // In the $.Deferred object's done() callback, you'll get a data structure containing search results.
-          smart.patient.api.search({type: 'Observation'}).done(function(obs){
-            
-             //$("#holder").append("<p> Observation: " + JSON.stringify(obs) + "</p>");
+          smart.patient.api.search({type: 'Observation'}).done(function(obs){        
              console.log( "Observation: " + JSON.stringify(obs) );
             
              // Resolve a Deferred object and call any doneCallbacks with the given args.
              def.resolve();
           });
 
+          return def.resolve();
         } // End onRead()
         
         function onError(smart) {
@@ -66,7 +70,7 @@
           //can register callbacks functions for failed tasks using the fail method. The reject methods triggers
           //callbacks registered with the fail method in the same way that the resolve method triggers callbacks
           //registered with done.          
-          def.reject();
+          return def.reject();
         } // End onError()
 
       });
