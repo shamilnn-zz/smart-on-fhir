@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>13:03 TEST SMART APP</title>
+    <title>13:05 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -56,7 +56,7 @@
              console.log( "Observation: " + JSON.stringify(obs,null,2) );
             
              // Resolve a Deferred object and call any doneCallbacks with the given args.
-             def.resolve();
+             def.resolve(obs);
           });
 
           return def.resolve();
@@ -73,8 +73,8 @@
           return def.reject();
         } // End onError()
 
-      }).then(function(patient){
-        $("#holder").append("<p>" + JSON.stringify(patient) + "</p>");
+      }).then(function(obsObject){
+        $("#holder").append("<p>" + JSON.stringify(obsObject) + "</p>");
       });
     </script>
   </head>
