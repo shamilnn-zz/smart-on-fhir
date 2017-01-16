@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>9:39 TEST SMART APP</title>
+    <title>9:43 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src='./lib/es6-shim-0.35.1.min.js'></script>
@@ -55,14 +55,14 @@
         
         
         function onReady(smart) {
-          $.("#holder").append("<p> SMART: " + JSON.stringify(smart) + "</p>");
+          $("#holder").append("<p> SMART: " + JSON.stringify(smart) + "</p>");
           
           var patient = smart.patient;
-          $.("#holder").append("<p> Patient: " + JSON.stringify(patient) + "</p>");
+          $("#holder").append("<p> Patient: " + JSON.stringify(patient) + "</p>");
           console.log( "Patient: " + JSON.stringify(patient) );
           
           var pt = patient.read();
-          $.("#holder").append("<p> Patient.read(): " + JSON.stringify(pt) + "</p>");
+          $("#holder").append("<p> Patient.read(): " + JSON.stringify(pt) + "</p>");
           console.log( "Patient.read(): " + JSON.stringify(pt) );
         
           var obv = smart.patient.api.fetchAll({
