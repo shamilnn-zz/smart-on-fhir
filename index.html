@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>10:32 TEST SMART APP</title>
+    <title>11:38 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -39,21 +39,21 @@
           // 1. Retrieve patient in scope
           // This will return a patient object like this: {"id":"4342009","api":{}}
           var patient = smart.patient;
-          console.log( "Patient from scope: " + JSON.stringify(patient) );
+          console.log( "Patient from scope: " + JSON.stringify(patient,null,2) );
           
           // 2. Obtaining the context
           // Once the client is initialized, you can obtain the context in which it was launched (the user who authorized the client and, if applicable, the patient that has been selected).
           // This returns a jQuery Deferred object which you can register a success callback to process the returned FHIR resource.
           smart.patient.read().then(function(pt) {
-            console.log( "Patient from context: " + JSON.stringify(pt) );            
+            console.log( "Patient from context: " + JSON.stringify(pt,null,2) );            
           });
           
           // 3. Fetch a resource
           // 4. Processing search results
           // This function return $.Deferred object, which you can work with simply by calling their done() method.
           // In the $.Deferred object's done() callback, you'll get a data structure containing search results.
-          smart.patient.api.search({type: 'Observation'}).done(function(obs){        
-             console.log( "Observation: " + JSON.stringify(obs) );
+          smart.patient.api.search({type: 'MedicationStatement'}).done(function(medstat){        
+             console.log( "MedicationStatement: " + JSON.stringify(medstat,null,2) );
             
              // Resolve a Deferred object and call any doneCallbacks with the given args.
              def.resolve();
@@ -63,7 +63,7 @@
         } // End onRead()
         
         function onError(smart) {
-          console.log( "Error: " + JSON.stringify(smart) );
+          console.log( "Error: " + JSON.stringify(smart,null,2) );
           console.log('FHIR.oauth2.ready(OnError)', arguments);
           
           // When something goes wrong, you reject the deferred object using the reject method. You
@@ -80,9 +80,6 @@
     <div id='errors'>
     </div>
     <div id="loading" class="spinner">
-      <div class="bounce1"></div>
-      <div class="bounce2"></div>
-      <div class="bounce3"></div>
     </div>
     <div id='holder' >
       <h2>Example-SMART-App</h2>
