@@ -21,7 +21,7 @@
         // 1. Initializing the client
         // Before you are able to run any operations against the FHIR API using the JS client, you will need to initialize it first.
         FHIR.oauth2.ready(onReady, onError);
-
+        console.log( "window.FHIR: " + JSON.stringify(window.FHIR,null,2) );
         
         // The deferred.promise() method allows an asynchronous function to prevent other code from interfering with the 
         // progress or status of its internal request.
@@ -49,7 +49,7 @@
           // In the $.Deferred object's done() callback, you'll get a data structure containing search results.
           smart.patient.api.search({type: 'Observation'}).done(function(obs){
             
-             $("#holder").append("<p> Observation: " + JSON.stringify(obs) + "</p>");
+             //$("#holder").append("<p> Observation: " + JSON.stringify(obs) + "</p>");
              console.log( "Observation: " + JSON.stringify(obs) );
             
              // Resolve a Deferred object and call any doneCallbacks with the given args.
