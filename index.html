@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>11:38 TEST SMART APP</title>
+    <title>11:48 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -52,8 +52,8 @@
           // 4. Processing search results
           // This function return $.Deferred object, which you can work with simply by calling their done() method.
           // In the $.Deferred object's done() callback, you'll get a data structure containing search results.
-          smart.patient.api.search({type: 'MedicationStatement'}).done(function(medstat){        
-             console.log( "MedicationStatement: " + JSON.stringify(medstat,null,2) );
+          smart.patient.api.search({type: 'Observation'}).done(function(obs){        
+             console.log( "Observation: " + JSON.stringify(obs,null,2) );
             
              // Resolve a Deferred object and call any doneCallbacks with the given args.
              def.resolve();
