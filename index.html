@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>9:43 TEST SMART APP</title>
+    <title>10:10 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src='./lib/es6-shim-0.35.1.min.js'></script>
@@ -15,56 +15,37 @@
       $( document ).ready(function() {
         console.log( "Loading page" );
         // Creating a deferred object for a set of enhancements to the way to use callbacks.
-        var ret = $.Deferred();
+        var def = $.Deferred();
         
         // 1. Initializing the client
         // Before you are able to run any operations against the FHIR API using the JS client, you will need to initialize it first.
         FHIR.oauth2.ready(onReady, onError);
-        
-        // 2. Obtaining the context
-        // Once the client is initialized, you can obtain the context in which it was launched (the user who authorized the client and, if applicable, the patient that has been selected).
-        // This returns a jQuery Deferred object which you can register a success callback to process the returned FHIR resource.
-        //smart.patient.read();
-        //console.log( "Context: " + JSON.stringify(smart) );
-        
-        // 3. Fetch a resource
-        // These functions return $.Deferred object, which you can work with simply by calling their done method.
-        /*
-        var observation = smart.patient.api.fetchAll({
-                    type: 'Observation',
-                    query: {
-                      code: {
-                        $or: ['http://loinc.org|8302-2', 'http://loinc.org|8462-4',
-                              'http://loinc.org|8480-6', 'http://loinc.org|2085-9',
-                              'http://loinc.org|2089-1', 'http://loinc.org|55284-4']
-                      }
-                    }
-                  });
-        */
-        // In the $.Deferred object's done() callback, you'll get a data structure containing search results.\
-        /*
-        observation.done(function(obs){
-          console.log( obs );
-        });
-        */
+
         
         // The deferred.promise() method allows an asynchronous function to prevent other code from interfering with the progress
         // or status of its internal request.
         console.log( "Completed" );
-        return ret.promise();
+        return def.promise();
         
         
         function onReady(smart) {
           $("#holder").append("<p> SMART: " + JSON.stringify(smart) + "</p>");
           
+          // 1. Retrieve patient in scope
           var patient = smart.patient;
           $("#holder").append("<p> Patient: " + JSON.stringify(patient) + "</p>");
           console.log( "Patient: " + JSON.stringify(patient) );
           
-          var pt = patient.read();
-          $("#holder").append("<p> Patient.read(): " + JSON.stringify(pt) + "</p>");
+          // 2. Obtaining the context
+          // Once the client is initialized, you can obtain the context in which it was launched (the user who authorized the client and, if applicable, the patient that has been selected).
+          // This returns a jQuery Deferred object which you can register a success callback to process the returned FHIR resource.
+          smart.patient.read();
           console.log( "Patient.read(): " + JSON.stringify(pt) );
         
+          // 3. Fetch a resource
+          // These functions return $.Deferred object, which you can work with simply by calling their done method.
+          var obv = smart.patient.api.search({type: 'Observation'});
+          /*
           var obv = smart.patient.api.fetchAll({
                     type: 'Observation',
                     query: {
@@ -75,19 +56,30 @@
                       }
                     }
                   });
+           */
           
+           // 4. Process search results
+           // In the $.Deferred object's done() callback, you'll get a data structure containing search results.
            obv.done(function(obs){
+             $("#holder").append("<p> Observation: " + JSON.stringify(patient) + "</p>");
              console.log( "Observation: " + JSON.stringify(obv) );
              console.log( "obs: " + JSON.stringify(obs) );
+             
+            // Resolve a Deferred object and call any doneCallbacks with the given args.
+             def.resolve();
            });
-
-        }
+        } // End onRead()
         
         function onError(smart) {
           console.log( "Error: " + JSON.stringify(smart) );
           console.log('FHIR.oauth2.ready(OnError)', arguments);
-          ret.reject();
-        }
+          
+          // When something goes wrong, you reject the deferred object using the reject method. You
+          //can register callbacks functions for failed tasks using the fail method. The reject methods triggers
+          //callbacks registered with the fail method in the same way that the resolve method triggers callbacks
+          //registered with done.          
+          def.reject();
+        } // End onError()
 
       });
     </script>
