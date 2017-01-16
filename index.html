@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>9:23 TEST SMART APP</title>
+    <title>9:39 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src='./lib/es6-shim-0.35.1.min.js'></script>
@@ -19,16 +19,17 @@
         
         // 1. Initializing the client
         // Before you are able to run any operations against the FHIR API using the JS client, you will need to initialize it first.
-        FHIR.oauth2.ready();
+        FHIR.oauth2.ready(onReady, onError);
         
         // 2. Obtaining the context
         // Once the client is initialized, you can obtain the context in which it was launched (the user who authorized the client and, if applicable, the patient that has been selected).
         // This returns a jQuery Deferred object which you can register a success callback to process the returned FHIR resource.
-        smart.patient.read();
-        console.log( "Context: " + JSON.stringify(smart) );
+        //smart.patient.read();
+        //console.log( "Context: " + JSON.stringify(smart) );
         
         // 3. Fetch a resource
-        // These functions return $.Deferred object, which you can work with simply by calling their done method.        
+        // These functions return $.Deferred object, which you can work with simply by calling their done method.
+        /*
         var observation = smart.patient.api.fetchAll({
                     type: 'Observation',
                     query: {
@@ -39,19 +40,51 @@
                       }
                     }
                   });
-        
-        // In the $.Deferred object's done() callback, you'll get a data structure containing search results.
+        */
+        // In the $.Deferred object's done() callback, you'll get a data structure containing search results.\
+        /*
         observation.done(function(obs){
           console.log( obs );
         });
+        */
         
         // The deferred.promise() method allows an asynchronous function to prevent other code from interfering with the progress
         // or status of its internal request.
-        return ret.promise();
         console.log( "Completed" );
+        return ret.promise();
         
         
-        function onError() {
+        function onReady(smart) {
+          $.("#holder").append("<p> SMART: " + JSON.stringify(smart) + "</p>");
+          
+          var patient = smart.patient;
+          $.("#holder").append("<p> Patient: " + JSON.stringify(patient) + "</p>");
+          console.log( "Patient: " + JSON.stringify(patient) );
+          
+          var pt = patient.read();
+          $.("#holder").append("<p> Patient.read(): " + JSON.stringify(pt) + "</p>");
+          console.log( "Patient.read(): " + JSON.stringify(pt) );
+        
+          var obv = smart.patient.api.fetchAll({
+                    type: 'Observation',
+                    query: {
+                      code: {
+                        $or: ['http://loinc.org|8302-2', 'http://loinc.org|8462-4',
+                              'http://loinc.org|8480-6', 'http://loinc.org|2085-9',
+                              'http://loinc.org|2089-1', 'http://loinc.org|55284-4']
+                      }
+                    }
+                  });
+          
+           obv.done(function(obs){
+             console.log( "Observation: " + JSON.stringify(obv) );
+             console.log( "obs: " + JSON.stringify(obs) );
+           });
+
+        }
+        
+        function onError(smart) {
+          console.log( "Error: " + JSON.stringify(smart) );
           console.log('FHIR.oauth2.ready(OnError)', arguments);
           ret.reject();
         }
