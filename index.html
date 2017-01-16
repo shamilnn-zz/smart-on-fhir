@@ -18,25 +18,25 @@
       
       $( window ).load(function() {
         
-        $('.spinner').append("<p> Started </p>");
+        $('.progress').append("<p> Started </p>");
         console.log( "Loading page..." );
         
         // Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
         var def = $.Deferred();
         def.done(function(){
-          $('.spinner').append("<p> All done </p>");
+          $('.progress').append("<p> All done </p>");
           console.log( "All done" );
         });
         
         // 1. Initializing the client
         // Before you are able to run any operations against the FHIR API using the JS client, you will need to initialize it first.
         FHIR.oauth2.ready(onReady, onError);
-        $('.spinner').append("<p>" + "window.FHIR: " + JSON.stringify(window.FHIR) + "</p>");
+        $('.progress').append("<p>" + "window.FHIR: " + JSON.stringify(window.FHIR) + "</p>");
         console.log( "window.FHIR: " + JSON.stringify(window.FHIR,null,2) );
         
         // The deferred.promise() method allows an asynchronous function to prevent other code from interfering with the 
         // progress or status of its internal request.
-        $('.spinner').append("<p> Completed </p>");
+        $('.progress').append("<p> Completed </p>");
         console.log( "Completed" );
         return def.promise();
         
@@ -46,14 +46,14 @@
           // 1. Retrieve patient in scope
           // This will return a patient object like this: {"id":"4342009","api":{}}
           var patient = smart.patient;
-          $('.spinner').append("<p>" + "Patient from scope: " + JSON.stringify(patient) + "</p>");
+          $('.progress').append("<p>" + "Patient from scope: " + JSON.stringify(patient) + "</p>");
           console.log( "Patient from scope: " + JSON.stringify(patient,null,2) );
           
           // 2. Obtaining the context
           // Once the client is initialized, you can obtain the context in which it was launched (the user who authorized the client and, if applicable, the patient that has been selected).
           // This returns a jQuery Deferred object which you can register a success callback to process the returned FHIR resource.
           smart.patient.read().then(function(pt) {
-            $('.spinner').append("<p>" + "Patient from context: " + JSON.stringify(pt) + "</p>");
+            $('.progress').append("<p>" + "Patient from context: " + JSON.stringify(pt) + "</p>");
             console.log( "Patient from context: " + JSON.stringify(pt,null,2) );            
           });
           
@@ -62,7 +62,7 @@
           // This function return $.Deferred object, which you can work with simply by calling their done() method.
           // In the $.Deferred object's done() callback, you'll get a data structure containing search results.
           smart.patient.api.search({type: 'Observation'}).done(function(obs){
-            $('.spinner').append("<p>" + "Observation: " + JSON.stringify(obs) + "</p>");
+            $('.progress').append("<p>" + "Observation: " + JSON.stringify(obs) + "</p>");
              console.log( "Observation: " + JSON.stringify(obs,null,2) );
             
              // Resolve a Deferred object and call any doneCallbacks with the given args.
@@ -73,7 +73,7 @@
         } // End onRead()
         
         function onError(smart) {
-          $('.spinner').append("<p>" + "Error: " + JSON.stringify(smart) + "</p>");
+          $('.progress').append("<p>" + "Error: " + JSON.stringify(smart) + "</p>");
           console.log( "Error: " + JSON.stringify(smart,null,2) );
           console.log('FHIR.oauth2.ready(OnError)', arguments);
           
@@ -88,6 +88,6 @@
     </script>
   </head>
   <body>
-    <div id="loading" class="spinner"></div>
+    <div id="loading" class="progress"></div>
   </body>
 </html>
