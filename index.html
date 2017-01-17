@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>14:17 TEST SMART APP</title>
+    <title>14:19 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -63,13 +63,13 @@
           // In the $.Deferred object's done() callback, you'll get a data structure containing search results.
           
           // Changed from smart.patient.api.search() to smart.patient.api.fetchAll()
-          
-        smart.patient.api.fetchAll({
+          /*
+          smart.patient.api.fetchAll({
                     type: 'Observation',
                     query: {code: 'http://loinc.org|9830-1'}
                   }).done(function(obs){
-          
-         // smart.patient.api.search({type: 'Observation'}).done(function(obs){
+          */
+         smart.patient.api.search({type: 'Observation'}).done(function(obs){
             //$('.progress').append("<p>" + "Observation: " + JSON.stringify(obs) + "</p>");
              console.log( "Observation: " + JSON.stringify(obs,null,2) );
             
