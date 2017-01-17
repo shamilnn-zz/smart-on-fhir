@@ -65,8 +65,11 @@
             $('.progress').append("<p>" + "Observation: " + JSON.stringify(obs) + "</p>");
              console.log( "Observation: " + JSON.stringify(obs,null,2) );
             
+            var units = smart.units;
+            console.log( "units: " + JSON.stringify(units) );
+            
              // Trying byCode() function
-            var byCodes = smart.byCodes(obs, 'code');
+            var byCodes = smart.byCodes(obs, '2085-9');
             console.log( "byCodes(): " + byCodes );
             console.log( "byCodes(): " + JSON.stringify(byCodes) );
             
