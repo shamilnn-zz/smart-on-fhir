@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>13:44 TEST SMART APP</title>
+    <title>14:01 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -79,9 +79,9 @@
             var byCodeFN = smart.byCodes(obs, 'code');
             console.log( "byCodes(): " + byCodeFN );
             
-            var height = byCodeFN('8302-2');
-            $('.progress').append("<p>" + "Height: " + JSON.stringify(height) + "</p>");
-            console.log( "Height: " + JSON.stringify(height) );
+            var code = byCodeFN('373066001');
+            $('.progress').append("<p>" + "Height: " + JSON.stringify(code) + "</p>");
+            console.log( "Height: " + JSON.stringify(code) );
             
              // Resolve a Deferred object and call any doneCallbacks with the given args.
              def.resolve(obs);
