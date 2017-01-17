@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>11:52 TEST SMART APP</title>
+    <title>13:04 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -63,7 +63,18 @@
           // In the $.Deferred object's done() callback, you'll get a data structure containing search results.
           
           // Changed from smart.patient.api.search() to smart.patient.api.fetchAll()
-          smart.patient.api.search({type: 'Observation'}).done(function(obs){
+        smart.patient.api.fetchAll({
+                    type: 'Observation',
+                    query: {
+                      code: {
+                        $or: ['http://loinc.org|8302-2', 'http://loinc.org|8462-4',
+                              'http://loinc.org|8480-6', 'http://loinc.org|2085-9',
+                              'http://loinc.org|2089-1', 'http://loinc.org|55284-4']
+                      }
+                    }
+                  }).done(function(obs){
+          
+          //smart.patient.api.search({type: 'Observation'}).done(function(obs){
             //$('.progress').append("<p>" + "Observation: " + JSON.stringify(obs) + "</p>");
              console.log( "Observation: " + JSON.stringify(obs,null,2) );
             
@@ -71,13 +82,9 @@
             var byCodeFN = smart.byCodes(obs, 'code');
             console.log( "byCodes(): " + byCodeFN );
             
-            //var hdl = byCodeFN('2085-9');
-            //$('.progress').append("<p>" + "HDL: " + JSON.stringify(hdl) + "</p>");
-            //console.log( "HDL: " + JSON.stringify(hdl) );
-
-            //var height = byCodeFN('8302-2');
-            //$('.progress').append("<p>" + "Height: " + JSON.stringify(height) + "</p>");
-            //console.log( "Height: " + JSON.stringify(height) );
+            var height = byCodeFN('8302-2');
+            $('.progress').append("<p>" + "Height: " + JSON.stringify(height) + "</p>");
+            console.log( "Height: " + JSON.stringify(height) );
             
              // Resolve a Deferred object and call any doneCallbacks with the given args.
              def.resolve(obs);
