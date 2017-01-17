@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>14:03 TEST SMART APP</title>
+    <title>10:56 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -69,14 +69,13 @@
             console.log( "units: " + JSON.stringify(units) );
             
              // Trying byCode() function
-            var byCodes = smart.byCodes(obs, '2085-9');
+            var byCodeFN = smart.byCodes(obs, '2085-9');
             console.log( "byCodes(): " + byCodes );
-            console.log( "byCodes(): " + JSON.stringify(byCodes) );
             
-            var hdl = smart.byCode('2085-9');
+            var hdl = byCodeFN('2085-9');
             console.log( "HDL: " + JSON.stringify(hdl) );
 
-            var height = smart.byCode('8302-2');
+            var height = byCodeFN('8302-2');
             console.log( "Height: " + JSON.stringify(height) );
             
              // Resolve a Deferred object and call any doneCallbacks with the given args.
