@@ -67,13 +67,14 @@
             
              // Trying byCode() function
             var byCodes = smart.byCodes(obs, 'code');
+            console.log( "byCodes(): " + byCodes );
             console.log( "byCodes(): " + JSON.stringify(byCodes) );
             
-            var hdl = byCodes('2085-9');
-            console.log( "HDL: " + hdl );
+            var hdl = smart.byCode('2085-9');
+            console.log( "HDL: " + JSON.stringify(hdl) );
 
             var height = smart.byCode('8302-2');
-            console.log( "Height: " + height );
+            console.log( "Height: " + JSON.stringify(height) );
             
              // Resolve a Deferred object and call any doneCallbacks with the given args.
              def.resolve(obs);
