@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>13:22 TEST SMART APP</title>
+    <title>13:35 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -66,7 +66,7 @@
         smart.patient.api.fetchAll({
                     type: 'Observation',
                     query: {
-                      code: {$exact:'http://loinc.org|8302-2'}
+                      code: {$and:'http://loinc.org|8302-2'}
                     }
                   }).done(function(obs){
           
@@ -78,7 +78,7 @@
             var byCodeFN = smart.byCodes(obs, 'code');
             console.log( "byCodes(): " + byCodeFN );
             
-            var height = byCodeFN('2085-9');
+            var height = byCodeFN('8302-2');
             $('.progress').append("<p>" + "Height: " + JSON.stringify(height) + "</p>");
             console.log( "Height: " + JSON.stringify(height) );
             
