@@ -67,7 +67,12 @@
             
              // Trying byCode() function
             var byCodes = smart.byCodes(obs, 'code');
-            var height = byCodes('8302-2');
+            console.log( "byCodes(): " + JSON.stringify(byCodes) );
+            
+            var hdl = byCodes('2085-9');
+            console.log( "HDL: " + hdl );
+
+            var height = smart.byCode('8302-2');
             console.log( "Height: " + height );
             
              // Resolve a Deferred object and call any doneCallbacks with the given args.
