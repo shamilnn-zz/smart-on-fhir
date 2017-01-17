@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>11:14 TEST SMART APP</title>
+    <title>11:20 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -65,11 +65,8 @@
             $('.progress').append("<p>" + "Observation: " + JSON.stringify(obs) + "</p>");
              console.log( "Observation: " + JSON.stringify(obs,null,2) );
             
-            var units = smart.units;
-            console.log( "units: " + JSON.stringify(units) );
-            
-             // Trying byCode() function
-            var byCodeFN = smart.byCodes(obs, '2085-9');
+             // Trying smart.byCodes() function
+            var byCodeFN = smart.byCodes(obs, 'code');
             console.log( "byCodes(): " + byCodeFN );
             
             var hdl = byCodeFN('2085-9');
