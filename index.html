@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>14:49 TEST SMART APP</title>
+    <title>14:53 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -34,7 +34,7 @@
 		var def = $.Deferred();
 		def.done(function(){
 			$("textarea#textRetrieveLog").append("====== DONE ======");
-			console.log( "====== DONE ======" );
+			console.log( "====== DONE PATIENT ======" );
 		});
 
 		// 1. Initializing the client
@@ -63,6 +63,13 @@
 	$(document).on("click", "#buttonResource", function(event){
 		event.stopPropagation();
 
+		// Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
+		var def = $.Deferred();
+		def.done(function(){
+			$("textarea#textResourceLog").append("====== DONE ======");
+			console.log( "====== DONE SEARCH ======" );
+		});
+		
 		FHIR.oauth2.ready(function(smart){
 
 			var resType = $("textarea#textResourceLog").val();
