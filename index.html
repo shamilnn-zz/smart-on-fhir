@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>09:33 TEST SMART APP</title>
+    <title>09:37 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -104,7 +104,8 @@
     <script  type="text/javascript">
       function onResourceWrite() {
         
-        console.log ( "Medication Statement started " );
+        alert("Medication Statement started");
+        console.log ( "Medication Statement started" );
         var def = $.Deferred();
         
         FHIR.oauth2.ready(function(smart){
@@ -148,7 +149,7 @@
     
   </head>
   <body>
-    <button type="button1" onClick="onResourceWrite()">Write a Resource</button>
+    <button type="button1" onclick="onResourceWrite()">Write a Resource</button>
     <div id="loading" class="progress"></div>
   </body>
 </html>
