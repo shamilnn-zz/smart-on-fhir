@@ -3,146 +3,142 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>10:55 TEST SMART APP</title>
+    <title>14:33 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
     <script src='./lib/fhir-client.js'></script>
     
     <script type="text/javascript">
-      $( document ).ready(function(){
-        console.log("URL: " + window.location.href);
-      });
-      
-      $( window ).load(function() {
-        
-        $('.progress').append("<p> Started </p>");
-        console.log( "Loading page..." );
-        
-        // Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
-        var def = $.Deferred();
-        def.done(function(){
-          $('.progress').append("<p> All done </p>");
-          console.log( "All done" );
-        });
-        
-        // 1. Initializing the client
-        // Before you are able to run any operations against the FHIR API using the JS client, you will need to initialize it first.
-        FHIR.oauth2.ready(onReady, onError);
-        $('.progress').append("<p>" + "window.FHIR: " + JSON.stringify(window.FHIR) + "</p>");
-        console.log( "window.FHIR: " + JSON.stringify(window.FHIR,null,2) );
-        
-        // The deferred.promise() method allows an asynchronous function to prevent other code from interfering with the 
-        // progress or status of its internal request.
-        $('.progress').append("<p> Completed </p>");
-        console.log( "Completed" );
-        return def.promise();
-        
-        
-        function onReady(smart) {
-         
-          // The instance of FHIR.client 
-          //$('.progress').append("<p>" + "Smart: " + JSON.stringify(smart) + "</p>");
-          //console.log( "smart: " + JSON.stringify(smart,null,2) );
-                    
-          // 1. Retrieve patient in scope
-          // This will return a patient object like this: {"id":"4342009","api":{}}
-          var patient = smart.patient;
-          //$('.progress').append("<p>" + "Patient from scope: " + JSON.stringify(patient) + "</p>");
-          //console.log( "Patient from scope: " + JSON.stringify(patient,null,2) );
-          
-          // 2. Obtaining the context
-          // Once the client is initialized, you can obtain the context in which it was launched (the user who authorized the client and, if applicable, the patient that has been selected).
-          // This returns a jQuery Deferred object which you can register a success callback to process the returned FHIR resource.
-          smart.patient.read().then(function(pt) {
-            //$('.progress').append("<p>" + "Patient from context: " + JSON.stringify(pt) + "</p>");
-            //console.log( "Patient from context: " + JSON.stringify(pt,null,2) );            
-          });
-          
-          // 3. Fetch a resource
-          // 4. Processing search results
-          // This function return $.Deferred object, which you can work with simply by calling their done() method.
-          // In the $.Deferred object's done() callback, you'll get a data structure containing search results.
-          
-          // Changed from smart.patient.api.search() to smart.patient.api.fetchAll()
-          /*
-          smart.patient.api.fetchAll({
-                    type: 'Observation',
-                    query: {code: 'http://loinc.org|9830-1'}
-                  }).done(function(obs){
-          */
-         smart.patient.api.search({type: 'Observation'}).done(function(obs){
-            //$('.progress').append("<p>" + "Observation: " + JSON.stringify(obs) + "</p>");
-             console.log( "Observation: " + JSON.stringify(obs,null,2) );
-            
-             // Trying smart.byCodes() function
-            var byCodeFN = smart.byCodes(obs, 'code');
-            console.log( "byCodes(): " + byCodeFN );
-            
-            var code = byCodeFN('9830-1');
-            $('.progress').append("<p>" + "Height: " + JSON.stringify(code) + "</p>");
-            console.log( "Height: " + JSON.stringify(code) );
-            
-             // Resolve a Deferred object and call any doneCallbacks with the given args.
-             def.resolve(obs);
-          });
-
-          return def.resolve();
-        } // End onRead()
-        
-        function onError(smart) {
-          $('.progress').append("<p>" + "Error: " + JSON.stringify(smart) + "</p>");
-          console.log( "Error: " + JSON.stringify(smart,null,2) );
-          console.log('FHIR.oauth2.ready(OnError)', arguments);
-          
-          // When something goes wrong, you reject the deferred object using the reject method. You
-          //can register callbacks functions for failed tasks using the fail method. The reject methods triggers
-          //callbacks registered with the fail method in the same way that the resolve method triggers callbacks
-          //registered with done.          
-          return def.reject();
-        } // End onError()
-
-      });
     </script>
     
     <script  type="text/javascript">
-      $( "button" ).on( "click", function(event) {
-        alert("Button click1");
-        event.stopPropagation();
-      });
+
+	$(window).load(function(){
+		var resource = {
+		"resourceType":"MedicationStatement","id":"example002","status":"completed","medicationReference":{"reference":"Medication/123"},
+		"patient":{"reference":"Patient/4342009"},"wasNotTaken":true,"reasonNotTaken":[{"coding":[{"system":"http://snomed.info/sct","code":"166643006","display":"Liver enzymes abnormal"}]}]};
+		$("textarea#textWriteLog").val( JSON.stringify(resource,null,2) );
+		$("textarea#textResourceLog").val( "Observation" );
+	});	
       
-      $(document).on("click", "button", function(event){
+
+	$(document).on("click", "#buttonRetrieve", function(event){
+		event.stopPropagation();
+
+		$("textarea#textRetrieveLog").append( "Starting..." );
+		console.log( "Starting..." );
+
+		// Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
+		var def = $.Deferred();
+		def.done(function(){
+			$("textarea#textRetrieveLog").append("====== DONE ======");
+			console.log( "====== DONE ======" );
+		});
+
+		// 1. Initializing the client
+		// Before you are able to run any operations against the FHIR API using the JS client, you will need to initialize it first.
+		FHIR.oauth2.ready(onReady, onError);
+		$("textarea#textRetrieveLog").append("window.FHIR: " + JSON.stringify(window.FHIR));
+		console.log( "window.FHIR: " + JSON.stringify(window.FHIR,null,2) );
         
-        alert("Button click2");
-        $('.progress').append("<p>Medication Statement started</p>");
-        console.log ( "Medication Statement started" );
-                
-        event.stopPropagation();
-        
-        var def = $.Deferred();
-        FHIR.oauth2.ready(onWriteReady, onWriteError);        
-        return def.promise();
+		// The deferred.promise() method allows an asynchronous function to prevent other code from interfering with the 
+		// progress or status of its internal request.
+		$("textarea#textRetrieveLog").append("Completed");
+		console.log( "Completed" );
+
+		return def.promise();
+
+	}); // on("click #buttonRetrieve
+
+
+
+	$(document).on("click", "#buttonWrite", function(event){
+		event.stopPropagation();
+	}); // on("click #buttonWrite
+
+
+
+	$(document).on("click", "#buttonResource", function(event){
+		event.stopPropagation();
+
+		FHIR.oauth2.ready(function(smart){
+
+			var resType = $("textarea#textResourceLog").val();
+			smart.patient.api.search({type: resType}).done(function(obs){
+				$("textarea#textResourceLog").append( resType + ": " + JSON.stringify(obs) );
+				console.log( "Observation: " + JSON.stringify(obs,null,2) );
+            
+				// Trying smart.byCodes() function
+				var byCodeFN = smart.byCodes(obs, 'code');
+				$("textarea#textResourceLog").append("byCodes() " + byCodeFN);
+				console.log( "byCodes(): " + byCodeFN );
+            
+				var code = byCodeFN('9830-1');
+				$("textarea#textResourceLog").append( "Height: " + JSON.stringify(code) );
+				console.log( "Height: " + JSON.stringify(code) );
+            
+				// Resolve a Deferred object and call any doneCallbacks with the given args.
+				def.resolve(obs);
+			});
+
+          		return def.resolve();
+		},
+		onError(smart)); //FHIR.oauth2.ready() 
+
+	}); // on("click #buttonResource
+
+
+	function onReady(smart) {
+         
+		// The instance of FHIR.client 
+		//$("textarea#textRetrieveLog").append("Smart: " + JSON.stringify(smart));
+		console.log( "smart: " + JSON.stringify(smart,null,2) );
+                    
+		// 1. Retrieve patient in scope
+		// This will return a patient object like this: {"id":"4342009","api":{}}
+		var patient = smart.patient;
+		$("textarea#textRetrieveLog").append("Patient from scope: " + JSON.stringify(patient));
+		console.log( "Patient from scope: " + JSON.stringify(patient,null,2) );
           
-        function onWriteError(smart){
-          $('.progress').append("<p> onWriteError(): " + JSON.stringify(smart) + "</p>");
-          console.log( "onWriteError(): " + JSON.stringify(smart,null,2) );
-          return def.reject();
-        }
-        
-        function onWriteReady(smart){
+		// 2. Obtaining the context
+		// Once the client is initialized, you can obtain the context in which it was launched (the user who authorized the client and, if applicable, the patient that has been selected).
+		// This returns a jQuery Deferred object which you can register a success callback to process the returned FHIR resource.
+		smart.patient.read().then(function(pt) {
+			$("textarea#textRetrieveLog").append("Patient from context: " + JSON.stringify(pt));
+			console.log( "Patient from context: " + JSON.stringify(pt,null,2) );            
+		});
+	}; // onReady(smart)
+
+
+	function onError(smart) {
+		$("textarea#textRetrieveLog").append("Error: " + JSON.stringify(smart));
+		console.log( "Error: " + JSON.stringify(smart,null,2) );
+		console.log('FHIR.oauth2.ready(OnError)', arguments);
           
-          $('.progress').append("<p> Smart from onResourceWrite(): " + JSON.stringify(smart) + "</p>");
-          console.log( "Smart from onResourceWrite(): " + JSON.stringify(smart,null,2) );
- 
-          return def.resolve();
-        }        
-      };
+		return def.reject();
+	} // onError()
+
     </script>
     
     
   </head>
   <body>
-    <button>Write a Resource</button>
-    <div id="loading" class="progress"></div>
+
+  <div class="grid" style="display:block;width:1200px;overflow:auto;margin:10px auto 0 auto;">
+	<div class="pageColumnLeft" style="float:left;clear:none;width:400px;">
+		<button id="buttonRetrieve">Retrieve Patient</button>
+		<textarea id="textRetrieveLog" rows="35" cols="45"/>
+	</div>
+	<div class="pageColumnMid" style="float:left;clear:none;width:400px;">
+		<button id="buttonWrite">Write a Resource</button>
+		<textarea id="textWriteLog" rows="35" cols="45"/>
+	</div>
+	<div class="pageColumnRight" style="float:left;clear:none;width:400px;">
+		<button id="buttonResource">Retrieve a Resource</button>
+		<textarea id="textResourceLog" rows="35" cols="45"/>
+	</div>
+   </div>
+
   </body>
 </html>
