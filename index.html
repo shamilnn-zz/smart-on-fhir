@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>10:43 TEST SMART APP</title>
+    <title>10:48 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -120,11 +120,10 @@
         event.stopPropagation();
         
         var def = $.Deferred();
-        FHIR.oauth2.ready(onWriteReady, onWriteError);
-        
+        FHIR.oauth2.ready(onWriteReady, onWriteError);        
         return def.promise();
           
-        function onWriteError(smart) {
+        function onWriteError(smart){
           $('.progress').append("<p>" + "onWriteError(): " + JSON.stringify(smart) + "</p>");
           console.log( "onWriteError(): " + JSON.stringify(smart,null,2) );
           return def.reject();
@@ -161,7 +160,7 @@
           smart.patient.api.create({resource: resMedicationStatement}).done(function(res) {
             $('.progress').append("<p>" + "Medication Statement created: " + JSON.stringify(res.data,null,2) + "</p>");
             console.log ( "Medication Statement created: " + JSON.stringify(res.data,null,2) );
-            def.resolve(res);
+            def.resolve(res);            
           });
           /*
           smart.patient.api.update({resource: resource}).done(function(res) {
@@ -169,8 +168,7 @@
           });
           */
           return def.resolve();
-        });
-        
+        };        
       };
     </script>
     
