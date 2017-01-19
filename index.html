@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>14:41 TEST SMART APP</title>
+    <title>14:49 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -14,6 +14,7 @@
     
     <script  type="text/javascript">
 
+	"use strict";
 	$(window).load(function(){
 		var resource = {
 		"resourceType":"MedicationStatement","id":"example002","status":"completed","medicationReference":{"reference":"Medication/123"},
@@ -84,7 +85,7 @@
 
           		return def.resolve();
 		},
-		onError(smart)); //FHIR.oauth2.ready() 
+		onError); //FHIR.oauth2.ready() 
 
 	}); // on("click #buttonResource
 
