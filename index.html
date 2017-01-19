@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>14:53 TEST SMART APP</title>
+    <title>15:06 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -56,6 +56,29 @@
 
 	$(document).on("click", "#buttonWrite", function(event){
 		event.stopPropagation();
+		
+		// Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
+		var def = $.Deferred();
+		def.done(function(){
+			$("textarea#textWriteLog").append("====== DONE ======");
+			console.log( "====== DONE WRITE ======" );
+		});
+		
+		FHIR.oauth2.ready(function(smart){
+
+			var resWrite = $("textarea#textWriteLog").val();
+			smart.patient.api.create({resource: resWrite}).done(function(res) {
+				$("textarea#textWriteLog").val("Resource created: " + JSON.stringify(resWrite.data,null,2) );
+				console.log ( "Resource created: " + JSON.stringify(res.data,null,2) );
+				def.resolve(res);            
+			});
+
+          		return def.resolve();
+		},
+		onError); //FHIR.oauth2.ready()
+		
+		return def.promise();
+
 	}); // on("click #buttonWrite
 
 
@@ -75,24 +98,18 @@
 			var resType = $("textarea#textResourceLog").val();
 			smart.patient.api.search({type: resType}).done(function(obs){
 				$("textarea#textResourceLog").append( resType + ": " + JSON.stringify(obs) );
-				console.log( "Observation: " + JSON.stringify(obs,null,2) );
-            
-				// Trying smart.byCodes() function
-				var byCodeFN = smart.byCodes(obs, 'code');
-				$("textarea#textResourceLog").append("byCodes() " + byCodeFN);
-				console.log( "byCodes(): " + byCodeFN );
-            
-				var code = byCodeFN('9830-1');
-				$("textarea#textResourceLog").append( "Height: " + JSON.stringify(code) );
-				console.log( "Height: " + JSON.stringify(code) );
-            
+				console.clear();
+				console.log( resType + ": " + JSON.stringify(obs,null,2) );
+
 				// Resolve a Deferred object and call any doneCallbacks with the given args.
 				def.resolve(obs);
 			});
 
           		return def.resolve();
 		},
-		onError); //FHIR.oauth2.ready() 
+		onError); //FHIR.oauth2.ready()
+		
+		return def.promise();
 
 	}); // on("click #buttonResource
 
