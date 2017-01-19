@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>10:48 TEST SMART APP</title>
+    <title>10:52 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -124,49 +124,16 @@
         return def.promise();
           
         function onWriteError(smart){
-          $('.progress').append("<p>" + "onWriteError(): " + JSON.stringify(smart) + "</p>");
+          $('.progress').append("<p> onWriteError(): " + JSON.stringify(smart) + "</p>");
           console.log( "onWriteError(): " + JSON.stringify(smart,null,2) );
           return def.reject();
         }
         
         function onWriteReady(smart){
           
-          $('.progress').append("<p>" + "Smart from onResourceWrite(): " + JSON.stringify(smart) + "</p>");
+          $('.progress').append("<p> Smart from onResourceWrite(): " + JSON.stringify(smart) + "</p>");
           console.log( "Smart from onResourceWrite(): " + JSON.stringify(smart,null,2) );
-          
-          var resMedicationStatement = {
-                      "resourceType": "MedicationStatement",
-                      "id": "example002",
-                       "status": "completed",
-                      "medicationReference": {
-                        "reference": "Medication/123"
-                      },
-                      "patient": {"reference": "Patient/4342009"},
-                      "wasNotTaken": true,
-                      "reasonNotTaken": [
-                        {
-                          "coding": [
-                            {
-                              "system": "http://snomed.info/sct",
-                              "code": "166643006",
-                              "display": "Liver enzymes abnormal"
-                            }
-                          ]
-                        }
-                      ]};
-          
-          console.log( "Resource: " + JSON.stringify(resMedicationStatement,null,2) );
-          
-          smart.patient.api.create({resource: resMedicationStatement}).done(function(res) {
-            $('.progress').append("<p>" + "Medication Statement created: " + JSON.stringify(res.data,null,2) + "</p>");
-            console.log ( "Medication Statement created: " + JSON.stringify(res.data,null,2) );
-            def.resolve(res);            
-          });
-          /*
-          smart.patient.api.update({resource: resource}).done(function(res) {
-            console.log ( "Medication Statement updated: " + JSON.stringify(res.data,null,2) );           
-          });
-          */
+ 
           return def.resolve();
         };        
       };
