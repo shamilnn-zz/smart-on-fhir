@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>09:44 TEST SMART APP</title>
+    <title>09:48 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -111,6 +111,10 @@
         console.log ( "Medication Statement started" );
                 
         FHIR.oauth2.ready(function(smart){
+          
+          $('.progress').append("<p>" + "Smart from onResourceWrite(): " + JSON.stringify(smart) + "</p>");
+          console.log( "Smart from onResourceWrite(): " + JSON.stringify(smart,null,2) );
+          
           var resource = {
                       "resourceType": "MedicationStatement",
                       "id": "example002",
