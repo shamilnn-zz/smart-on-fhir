@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>10:06 TEST SMART APP</title>
+    <title>10:14 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -105,7 +105,7 @@
     </script>
     
     <script  type="text/javascript">
-      function onResourceWrite() {
+      $(document).on("click", ".button1", function(){
         
         $('.progress').append("<p>Medication Statement started</p>");
         console.log ( "Medication Statement started" );
@@ -148,13 +148,13 @@
           
           console.log( "Resource: " + JSON.stringify(resMedicationStatement,null,2) );
           
-          smart.api.create({resource: resMedicationStatement}).done(function(res) {
+          smart.patient.api.create({resource: resMedicationStatement}).done(function(res) {
             $('.progress').append("<p>" + "Medication Statement created: " + JSON.stringify(res.data,null,2) + "</p>");
             console.log ( "Medication Statement created: " + JSON.stringify(res.data,null,2) );
             def.resolve(res);
           });
           /*
-          smart.api.update({resource: resource}).done(function(res) {
+          smart.patient.api.update({resource: resource}).done(function(res) {
             console.log ( "Medication Statement updated: " + JSON.stringify(res.data,null,2) );           
           });
           */
@@ -167,7 +167,7 @@
     
   </head>
   <body>
-    <button type="button1" onclick="onResourceWrite()">Write a Resource</button>
+    <button class="button1">Write a Resource</button>
     <div id="loading" class="progress"></div>
   </body>
 </html>
