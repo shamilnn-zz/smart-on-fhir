@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>10:14 TEST SMART APP</title>
+    <title>10:24 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -41,21 +41,22 @@
         
         function onReady(smart) {
          
-          $('.progress').append("<p>" + "Smart: " + JSON.stringify(smart) + "</p>");
-          console.log( "smart: " + JSON.stringify(smart,null,2) );
+          // The instance of FHIR.client 
+          //$('.progress').append("<p>" + "Smart: " + JSON.stringify(smart) + "</p>");
+          //console.log( "smart: " + JSON.stringify(smart,null,2) );
                     
           // 1. Retrieve patient in scope
           // This will return a patient object like this: {"id":"4342009","api":{}}
           var patient = smart.patient;
-          $('.progress').append("<p>" + "Patient from scope: " + JSON.stringify(patient) + "</p>");
-          console.log( "Patient from scope: " + JSON.stringify(patient,null,2) );
+          //$('.progress').append("<p>" + "Patient from scope: " + JSON.stringify(patient) + "</p>");
+          //console.log( "Patient from scope: " + JSON.stringify(patient,null,2) );
           
           // 2. Obtaining the context
           // Once the client is initialized, you can obtain the context in which it was launched (the user who authorized the client and, if applicable, the patient that has been selected).
           // This returns a jQuery Deferred object which you can register a success callback to process the returned FHIR resource.
           smart.patient.read().then(function(pt) {
-            $('.progress').append("<p>" + "Patient from context: " + JSON.stringify(pt) + "</p>");
-            console.log( "Patient from context: " + JSON.stringify(pt,null,2) );            
+            //$('.progress').append("<p>" + "Patient from context: " + JSON.stringify(pt) + "</p>");
+            //console.log( "Patient from context: " + JSON.stringify(pt,null,2) );            
           });
           
           // 3. Fetch a resource
@@ -105,8 +106,13 @@
     </script>
     
     <script  type="text/javascript">
+      $( ".button1" ).on( "click", function() {
+        alert("Button click1");
+      });
+      
       $(document).on("click", ".button1", function(){
         
+        alert("Button click2");
         $('.progress').append("<p>Medication Statement started</p>");
         console.log ( "Medication Statement started" );
                 
