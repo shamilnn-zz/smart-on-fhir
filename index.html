@@ -3,12 +3,10 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>14:19 TEST SMART APP</title>
+    <title>09:25 TEST SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
-    <!-- <script src='./lib/es6-shim-0.35.1.min.js'></script> -->
-    <!-- <script src='./src/js/example-smart-app.js'></script> -->
     <script src='./lib/fhir-client.js'></script>
     
     <script type="text/javascript">
@@ -102,8 +100,47 @@
 
       });
     </script>
+    
+    <script  type="text/javascript">
+      function onResourceWrite() {
+        FHIR.oauth2.ready(function(smart){
+          var resource = {
+                      "resourceType": "MedicationStatement",
+                      "id": "example002",
+                       "status": "completed",
+                      "medicationReference": {
+                        "reference": "Medication/123"
+                      },
+                      "patient": {"reference": "Patient/4342009"},
+                      "wasNotTaken": true,
+                      "reasonNotTaken": [
+                        {
+                          "coding": [
+                            {
+                              "system": "http://snomed.info/sct",
+                              "code": "166643006",
+                              "display": "Liver enzymes abnormal"
+                            }
+                          ]
+                        }
+                      ]};
+          smart.api.create({resource: resource}).done(function(res) {
+            $('.progress').append("<p>" + "Medication Statement created: " + JSON.stringify(res.data,null,2) + "</p>");
+            console.log ( "Medication Statement created: " + JSON.stringify(res.data,null,2) );           
+          });
+          /*
+          smart.api.update({resource: resource}).done(function(res) {
+            console.log ( "Medication Statement updated: " + JSON.stringify(res.data,null,2) );           
+          });
+          */
+        });
+      };
+    </script>
+    
+    
   </head>
   <body>
+    <button type="button1" onClick="onResourceWrite()">Write a Resource</button>
     <div id="loading" class="progress"></div>
   </body>
 </html>
