@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>14:20 Monday SMART APP</title>
+    <title>14:26 Monday SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -36,7 +36,7 @@
 		var def = $.Deferred();
 		def.done(function(){
 			$("textarea#textRetrieveLog").append("====== DONE ======");
-			console.log( "====== DONE PATIENT ======" );
+			console.log( "====== DONE ======" );
 		});
 
 		// 1. Initializing the client
@@ -60,7 +60,6 @@
 		event.stopPropagation();
 		
 		console.log( "Writing the MedicationStatement resource" );
-		console.log("SMART:" + JSON.stringify(window.smart,null,2));
 		
 		// Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
 		//var def = $.Deferred();
@@ -70,23 +69,19 @@
 		//});
 		
 		FHIR.oauth2.ready(function(smart){
-		//function resourceCreate() {
 
 			var resWrite = $("textarea#textWriteLog").val();
 			// Chaning from smart.patient.api.create to smart.api.create
 			smart.patient.api.create({resource: resWrite}).done(function(res) {
 				$("textarea#textWriteLog").val("Resource created: " + JSON.stringify(resWrite.data,null,2) );
 				console.log ( "Resource created: " + JSON.stringify(res.data,null,2) );
-				//def.resolve(res);            
+				def.resolve(res);            
 			});
 
-          		//return def.resolve();
+          		return def.resolve();
 		}); //FHIR.oauth2.ready()
 		
-		//resourceCreate();
-		
-		return;
-		//return def.promise();
+		return def.promise();
 
 	}); // on("click #buttonWrite
 
@@ -96,8 +91,7 @@
 		event.stopPropagation();
 
 		console.log( "Retrieving a " + $("textarea#textResourceLog").val() + " resource" );
-		console.log("SMART:" + JSON.stringify(window.smart,null,2));
-		
+
 		// Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
 		//var def = $.Deferred();
 		//def.done(function(){
@@ -117,25 +111,19 @@
 				console.log( resType + ": " + JSON.stringify(res,null,2) );
 
 				// Resolve a Deferred object and call any doneCallbacks with the given args.
-				//def.resolve(res);
+				def.resolve(res);
 			});
 
-          		//return def.resolve();
+          		return def.resolve();
 		}); //FHIR.oauth2.ready()
-		
-		//resourceSearch();
-		
-		return;
-		//return def.promise();
+
+		return def.promise();
 
 	}); // on("click #buttonResource
 
 
 	function onReady(smart) {
          
-		// Storing in a global scope
-		window.smart = smart;
-		
 		// The instance of FHIR.client 
 		$("textarea#textRetrieveLog").append("Smart: " + JSON.stringify(smart));
 		console.log( "smart: " + JSON.stringify(smart,null,2) );
