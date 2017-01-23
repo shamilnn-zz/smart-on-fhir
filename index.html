@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>13:29 Monday SMART APP</title>
+    <title>13:54 Monday SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -67,7 +67,7 @@
 		//});
 		
 		//FHIR.oauth2.ready(function(smart){
-		function(){
+		(function() {
 
 			var resWrite = $("textarea#textWriteLog").val();
 			// Chaning from smart.patient.api.create to smart.api.create
@@ -78,7 +78,7 @@
 			});
 
           		//return def.resolve();
-		}(); //FHIR.oauth2.ready()
+		}).call(this); //FHIR.oauth2.ready()
 		
 		return;
 		//return def.promise();
@@ -98,7 +98,7 @@
 		//});
 		
 		//FHIR.oauth2.ready(function(smart){
-		function(){
+		(function() {
 
 			var resType = $("textarea#textResourceLog").val();
 			$("textarea#textResourceLog").append( "Retrieving a " + resType + " resource" );
@@ -113,7 +113,7 @@
 			});
 
           		return def.resolve();
-		}(); //FHIR.oauth2.ready()
+		}).call(this); //FHIR.oauth2.ready()
 		
 		return;
 		//return def.promise();
