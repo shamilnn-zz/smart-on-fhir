@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>15:38 Monday SMART APP</title>
+    <title>15:43 Monday SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -130,16 +130,17 @@
 		var resType = $("textarea#textResourceLog").val();
 		$("textarea#textResourceLog").append( "Retrieving a " + resType + " resource" );
 			
-		var obv = smart.patient.api.fetchAll({type: "Observation"});	
-		console.log("onRetrieve() " + JSON.stringify(obv,null,2));
 		
-		$.when(obv).fail(onError);			
-		$.when(obv).done(function(res){
-			$("textarea#textResourceLog").append( resType + ": " + JSON.stringify(res) );
+		var obv = smart.patient.api.fetchAll({type: 'Observation'});
+
+    		$.when(obv).fail(onError);
+
+    		$.when(obv).done(function(obv) {
+			$("textarea#textResourceLog").append( resType + ": " + JSON.stringify(obv) );
 			console.clear();
-			console.log( resType + ": " + JSON.stringify(res,null,2) );
-			// Resolve a Deferred object and call any doneCallbacks with the given args.
-		};
+			console.log( resType + ": " + JSON.stringify(obv, null, 2) );
+		});
+
 	} // onRetrieve()
 	    
 	    
