@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>15:18 TEST SMART APP</title>
+    <title>13:29 Monday SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -16,9 +16,11 @@
 
 	"use strict";
 	$(window).load(function(){
-		var resource = {
-		"resourceType":"MedicationStatement","id":"example002","status":"completed","medicationReference":{"reference":"Medication/123"},
-		"patient":{"reference":"Patient/4342009"},"wasNotTaken":true,"reasonNotTaken":[{"coding":[{"system":"http://snomed.info/sct","code":"166643006","display":"Liver enzymes abnormal"}]}]};
+		var resource = {"resourceType":"MedicationStatement","contained":[{"resourceType":"Medication","id":"123","code":{"text":"FHIR Test Medication"}}],
+"patient":{"reference":"Patient/4342008"},"status":"active","medicationReference":{"reference":"#123"},
+"dosage":[{"timing":{"code":{"coding":[{"system":"http://hl7.org/fhir/v3/vs/GTSAbbreviation","code":"BID"}],"text":"BID"}},
+"quantityQuantity":{"value":60.0,"units":"mg","system":"http://unitsofmeasure.org","code":"mg"}}]};
+		
 		$("textarea#textWriteLog").val( JSON.stringify(resource,null,2) );
 		$("textarea#textResourceLog").val( "Observation" );
 	});	
@@ -58,27 +60,28 @@
 		event.stopPropagation();
 		
 		// Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
-		var def = $.Deferred();
-		def.done(function(){
-			$("textarea#textWriteLog").append("====== DONE ======");
-			console.log( "====== DONE WRITE ======" );
-		});
+		//var def = $.Deferred();
+		//def.done(function(){
+		//	$("textarea#textWriteLog").append("====== DONE ======");
+		//	console.log( "====== DONE WRITE ======" );
+		//});
 		
-		FHIR.oauth2.ready(function(smart){
+		//FHIR.oauth2.ready(function(smart){
+		function(){
 
 			var resWrite = $("textarea#textWriteLog").val();
 			// Chaning from smart.patient.api.create to smart.api.create
-			smart.api.create({resource: resWrite}).done(function(res) {
+			window.smart.patient.api.create({resource: resWrite}).done(function(res) {
 				$("textarea#textWriteLog").val("Resource created: " + JSON.stringify(resWrite.data,null,2) );
 				console.log ( "Resource created: " + JSON.stringify(res.data,null,2) );
-				def.resolve(res);            
+				//def.resolve(res);            
 			});
 
-          		return def.resolve();
-		},
-		onError); //FHIR.oauth2.ready()
+          		//return def.resolve();
+		}(); //FHIR.oauth2.ready()
 		
-		return def.promise();
+		return;
+		//return def.promise();
 
 	}); // on("click #buttonWrite
 
@@ -88,39 +91,43 @@
 		event.stopPropagation();
 
 		// Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
-		var def = $.Deferred();
-		def.done(function(){
-			$("textarea#textResourceLog").append("====== DONE ======");
-			console.log( "====== DONE SEARCH ======" );
-		});
+		//var def = $.Deferred();
+		//def.done(function(){
+		//	$("textarea#textResourceLog").append("====== DONE ======");
+		//	console.log( "====== DONE SEARCH ======" );
+		//});
 		
-		FHIR.oauth2.ready(function(smart){
+		//FHIR.oauth2.ready(function(smart){
+		function(){
 
 			var resType = $("textarea#textResourceLog").val();
 			$("textarea#textResourceLog").append( "Retrieving a " + resType + " resource" );
 			
-			smart.patient.api.search({type: resType}).done(function(res){
+			window.smart.patient.api.search({type: resType}).done(function(res){
 				$("textarea#textResourceLog").append( resType + ": " + JSON.stringify(res) );
 				console.clear();
 				console.log( resType + ": " + JSON.stringify(res,null,2) );
 
 				// Resolve a Deferred object and call any doneCallbacks with the given args.
-				def.resolve(res);
+				//def.resolve(res);
 			});
 
           		return def.resolve();
-		},
-		onError); //FHIR.oauth2.ready()
+		}(); //FHIR.oauth2.ready()
 		
-		return def.promise();
+		return;
+		//return def.promise();
 
 	}); // on("click #buttonResource
 
 
 	function onReady(smart) {
          
+		// Storing in a global scope
+		window.smart = smart;
+		
 		// The instance of FHIR.client 
-		//$("textarea#textRetrieveLog").append("Smart: " + JSON.stringify(smart));
+		$("textarea#textRetrieveLog").append("Smart: " + JSON.stringify(smart));
 		console.log( "smart: " + JSON.stringify(smart,null,2) );
                     
 		// 1. Retrieve patient in scope
