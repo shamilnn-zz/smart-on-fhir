@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>14:57 Monday SMART APP</title>
+    <title>15:00 Monday SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -105,7 +105,7 @@
 			var resType = $("textarea#textResourceLog").val();
 			$("textarea#textResourceLog").append( "Retrieving a " + resType + " resource" );
 			
-			smart.patient.api.search({type: resType}).done(function(res){
+			smart.patient.api.search({type: "Observation"}).done(function(res){
 				$("textarea#textResourceLog").append( resType + ": " + JSON.stringify(res) );
 				console.clear();
 				console.log( resType + ": " + JSON.stringify(res,null,2) );
