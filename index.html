@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>14:34 Monday SMART APP</title>
+    <title>14:57 Monday SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -62,11 +62,11 @@
 		console.log( "Writing the MedicationStatement resource" );
 		
 		// Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
-		//var def = $.Deferred();
-		//def.done(function(){
-		//	$("textarea#textWriteLog").append("====== DONE ======");
-		//	console.log( "====== DONE WRITE ======" );
-		//});
+		var def1 = $.Deferred();
+		def1.done(function(){
+			$("textarea#textWriteLog").append("====== DONE WRITE ======");
+			console.log( "====== DONE WRITE ======" );
+		});
 		
 		FHIR.oauth2.ready(function(smart){
 
@@ -75,13 +75,13 @@
 			smart.patient.api.create({resource: resWrite}).done(function(res) {
 				$("textarea#textWriteLog").val("Resource created: " + JSON.stringify(resWrite.data,null,2) );
 				console.log ( "Resource created: " + JSON.stringify(res.data,null,2) );
-				window.def.resolve(res);            
+				def1.resolve(res);            
 			});
 
-          		return window.def.resolve();
+          		return def1.resolve();
 		}); //FHIR.oauth2.ready()
 		
-		return window.def.promise();
+		return def1.promise();
 
 	}); // on("click #buttonWrite
 
@@ -93,11 +93,11 @@
 		console.log( "Retrieving a " + $("textarea#textResourceLog").val() + " resource" );
 
 		// Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
-		//var def = $.Deferred();
-		//def.done(function(){
-		//	$("textarea#textResourceLog").append("====== DONE ======");
-		//	console.log( "====== DONE SEARCH ======" );
-		//});
+		var def2 = $.Deferred();
+		def2.done(function(){
+			$("textarea#textResourceLog").append("====== DONE SEARCH ======");
+			console.log( "====== DONE SEARCH ======" );
+		});
 		
 		FHIR.oauth2.ready(function(smart){
 		//function resourceSearch() {
@@ -111,13 +111,13 @@
 				console.log( resType + ": " + JSON.stringify(res,null,2) );
 
 				// Resolve a Deferred object and call any doneCallbacks with the given args.
-				window.def.resolve(res);
+				def2.resolve(res);
 			});
 
-          		return window.def.resolve();
+          		return def2.resolve();
 		}); //FHIR.oauth2.ready()
 
-		return window.def.promise();
+		return def2.promise();
 
 	}); // on("click #buttonResource
 
