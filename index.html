@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>14:00 Monday SMART APP</title>
+    <title>14:05 Monday SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -59,7 +59,7 @@
 	$(document).on("click", "#buttonWrite", function(event){
 		event.stopPropagation();
 		
-		$("textarea#textResourceLog").append( "Writing the MedicationStatement resource" );
+		console.log( "Writing the MedicationStatement resource" );
 		
 		// Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
 		//var def = $.Deferred();
@@ -69,7 +69,7 @@
 		//});
 		
 		//FHIR.oauth2.ready(function(smart){
-		(function() {
+		function resourceCreate() {
 
 			var resWrite = $("textarea#textWriteLog").val();
 			// Chaning from smart.patient.api.create to smart.api.create
@@ -80,7 +80,9 @@
 			});
 
           		//return def.resolve();
-		}).call(this); //FHIR.oauth2.ready()
+		}; //FHIR.oauth2.ready()
+		
+		resourceCreate();
 		
 		return;
 		//return def.promise();
@@ -92,6 +94,8 @@
 	$(document).on("click", "#buttonResource", function(event){
 		event.stopPropagation();
 
+		console.log( "Retrieving a " + $("textarea#textResourceLog").val() + " resource" );
+		
 		// Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
 		//var def = $.Deferred();
 		//def.done(function(){
@@ -100,7 +104,7 @@
 		//});
 		
 		//FHIR.oauth2.ready(function(smart){
-		(function() {
+		function resourceSearch() {
 
 			var resType = $("textarea#textResourceLog").val();
 			$("textarea#textResourceLog").append( "Retrieving a " + resType + " resource" );
@@ -115,7 +119,9 @@
 			});
 
           		//return def.resolve();
-		}).call(this); //FHIR.oauth2.ready()
+		}; //FHIR.oauth2.ready()
+		
+		resourceSearch();
 		
 		return;
 		//return def.promise();
