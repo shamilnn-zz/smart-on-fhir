@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>14:05 Monday SMART APP</title>
+    <title>14:11 Monday SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -60,6 +60,7 @@
 		event.stopPropagation();
 		
 		console.log( "Writing the MedicationStatement resource" );
+		console.log("SMART:" + JSON.stringify(window.smart,null,2));
 		
 		// Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
 		//var def = $.Deferred();
@@ -95,6 +96,7 @@
 		event.stopPropagation();
 
 		console.log( "Retrieving a " + $("textarea#textResourceLog").val() + " resource" );
+		console.log("SMART:" + JSON.stringify(window.smart,null,2));
 		
 		// Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
 		//var def = $.Deferred();
