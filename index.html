@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>14:26 Monday SMART APP</title>
+    <title>14:31 Monday SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -33,8 +33,8 @@
 		console.log( "Starting..." );
 
 		// Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
-		var def = $.Deferred();
-		def.done(function(){
+		this.def = $.Deferred();
+		this.def.done(function(){
 			$("textarea#textRetrieveLog").append("====== DONE ======");
 			console.log( "====== DONE ======" );
 		});
@@ -50,7 +50,7 @@
 		$("textarea#textRetrieveLog").append("Completed");
 		console.log( "Completed" );
 
-		return def.promise();
+		return this.def.promise();
 
 	}); // on("click #buttonRetrieve
 
@@ -75,13 +75,13 @@
 			smart.patient.api.create({resource: resWrite}).done(function(res) {
 				$("textarea#textWriteLog").val("Resource created: " + JSON.stringify(resWrite.data,null,2) );
 				console.log ( "Resource created: " + JSON.stringify(res.data,null,2) );
-				def.resolve(res);            
+				window.def.resolve(res);            
 			});
 
-          		return def.resolve();
+          		return window.def.resolve();
 		}); //FHIR.oauth2.ready()
 		
-		return def.promise();
+		return window.def.promise();
 
 	}); // on("click #buttonWrite
 
@@ -111,13 +111,13 @@
 				console.log( resType + ": " + JSON.stringify(res,null,2) );
 
 				// Resolve a Deferred object and call any doneCallbacks with the given args.
-				def.resolve(res);
+				window.def.resolve(res);
 			});
 
-          		return def.resolve();
+          		return window.def.resolve();
 		}); //FHIR.oauth2.ready()
 
-		return def.promise();
+		return window.def.promise();
 
 	}); // on("click #buttonResource
 
