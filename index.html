@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>13:54 Monday SMART APP</title>
+    <title>14:00 Monday SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -59,6 +59,8 @@
 	$(document).on("click", "#buttonWrite", function(event){
 		event.stopPropagation();
 		
+		$("textarea#textResourceLog").append( "Writing the MedicationStatement resource" );
+		
 		// Preliminary step - Creating a deferred object for a set of enhancements to the way to use callbacks.
 		//var def = $.Deferred();
 		//def.done(function(){
@@ -112,7 +114,7 @@
 				//def.resolve(res);
 			});
 
-          		return def.resolve();
+          		//return def.resolve();
 		}).call(this); //FHIR.oauth2.ready()
 		
 		return;
