@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>14:11 Monday SMART APP</title>
+    <title>14:15 Monday SMART APP</title>
     <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
@@ -69,12 +69,12 @@
 		//	console.log( "====== DONE WRITE ======" );
 		//});
 		
-		//FHIR.oauth2.ready(function(smart){
-		function resourceCreate() {
+		FHIR.oauth2.ready(function(smart){
+		//function resourceCreate() {
 
 			var resWrite = $("textarea#textWriteLog").val();
 			// Chaning from smart.patient.api.create to smart.api.create
-			window.smart.patient.api.create({resource: resWrite}).done(function(res) {
+			smart.patient.api.create({resource: resWrite}).done(function(res) {
 				$("textarea#textWriteLog").val("Resource created: " + JSON.stringify(resWrite.data,null,2) );
 				console.log ( "Resource created: " + JSON.stringify(res.data,null,2) );
 				//def.resolve(res);            
@@ -83,7 +83,7 @@
           		//return def.resolve();
 		}; //FHIR.oauth2.ready()
 		
-		resourceCreate();
+		//resourceCreate();
 		
 		return;
 		//return def.promise();
@@ -105,13 +105,13 @@
 		//	console.log( "====== DONE SEARCH ======" );
 		//});
 		
-		//FHIR.oauth2.ready(function(smart){
-		function resourceSearch() {
+		FHIR.oauth2.ready(function(smart){
+		//function resourceSearch() {
 
 			var resType = $("textarea#textResourceLog").val();
 			$("textarea#textResourceLog").append( "Retrieving a " + resType + " resource" );
 			
-			window.smart.patient.api.search({type: resType}).done(function(res){
+			smart.patient.api.search({type: resType}).done(function(res){
 				$("textarea#textResourceLog").append( resType + ": " + JSON.stringify(res) );
 				console.clear();
 				console.log( resType + ": " + JSON.stringify(res,null,2) );
@@ -123,7 +123,7 @@
           		//return def.resolve();
 		}; //FHIR.oauth2.ready()
 		
-		resourceSearch();
+		//resourceSearch();
 		
 		return;
 		//return def.promise();
